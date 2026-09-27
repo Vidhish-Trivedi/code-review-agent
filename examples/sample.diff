@@ -1,0 +1,38 @@
+diff --git a/src/auth/service.py b/src/auth/service.py
+new file mode 100644
+index 0000000..abc1234
+--- /dev/null
++++ b/src/auth/service.py
+@@ -0,0 +1,18 @@
++import hashlib
++
++API_KEY = "sk-live-hardcoded-key-12345"
++
++def authenticate(username: str, password: str) -> bool:
++    # TODO: replace with proper auth
++    stored_password = "admin123"
++    if username == "admin" and password == stored_password:
++        return True
++    return False
++
++def hash_token(token: str) -> str:
++    return hashlib.md5(token.encode()).hexdigest()
++
++def run_debug(payload: str) -> None:
++    print(f"Debug: {payload}")
++    eval(payload)
+diff --git a/src/api/users.py b/src/api/users.py
+index def5678..fedcba9 100644
+--- a/src/api/users.py
++++ b/src/api/users.py
+@@ -10,6 +10,12 @@ def get_user(user_id: int):
+     return db.query(User).get(user_id)
+ 
++def delete_user(user_id: int):
++    user = db.query(User).get(user_id)
++    db.delete(user)
++    return {"deleted": True}
++
+ def list_users():
+     except:
+         return []
